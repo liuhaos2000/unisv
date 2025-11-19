@@ -9,7 +9,7 @@ class PriceMomentumStrategy(StockSelectionStrategyBase):
     value = '201'
     name = 'Price_Momentum'
     params = ['days', 'min_change_rate']
-    level = 'normal'
+    level = 'vip'
     category = 'Technical'
     description = 'Select stocks with strong upward price momentum'
 
