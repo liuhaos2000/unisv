@@ -1,0 +1,57 @@
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+
+from ..logic.strategies.registry import strategy_registry
+
+
+@api_view(['GET'])
+#@permission_classes([IsAuthenticated])  # 需要登录
+def list_strategies(request):
+    user = request.user
+    is_vip = getattr(user, 'is_vip', False)
+
+    strategies = []
+
+    for name, cls in strategy_registry.items():
+        # VIP 策略过滤
+        if getattr(cls, "level", "normal") == "vip" and not is_vip:
+            continue
+
+        # 参数格式： [{"name": "period", "type": "int", "default": 10}]
+        # 支持两种格式：字符串列表 ['period', 'lower'] 或字典列表
+        params = []
+        if hasattr(cls, "params"):
+            for p in cls.params:
+                if isinstance(p, dict):
+                    # 字典格式
+                    params.append({
+                        "name": p.get("name"),
+                        "type": p.get("type", "str"),
+                        "default": p.get("default"),
+                        "desc": p.get("desc", "")
+                    })
+                else:
+                    # 字符串格式
+                    params.append({
+                        "name": str(p),
+                        "type": "str",
+                        "default": None,
+                        "desc": ""
+                    })
+
+        strategies.append({
+            "value": getattr(cls, "value", name),
+            "name": name,
+            "title": getattr(cls, "title", name),
+            "description": getattr(cls, "description", ""),
+            "level": getattr(cls, "level", "normal"),
+            "params": params,
+            "category": getattr(cls, "category", "General"),
+        })
+
+    return Response({
+        "code": 0,
+        "count": len(strategies),
+        "data": strategies
+    })

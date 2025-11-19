@@ -11,7 +11,8 @@ class User(BaseModel):
     email = models.EmailField(max_length=120, unique=True)
     password_hash = models.CharField(max_length=255)
     phone = models.CharField(max_length=30, null=True, blank=True)
-
+    is_vip = models.BooleanField(default=False)
+    
     def set_password(self, password):
         """设置密码哈希（使用 Django 的哈希器）"""
         self.password_hash = make_password(password)
@@ -26,7 +27,8 @@ class User(BaseModel):
         data.update({
             'phone': self.phone,
             'username': self.username,
-            'email': self.email
+            'email': self.email,
+            'is_vip': self.is_vip,
         })
         return data
 

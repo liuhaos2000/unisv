@@ -1,0 +1,20 @@
+# api/views.py
+from rest_framework.decorators import api_view
+from django.http import JsonResponse
+from backtest.registry import strategy_registry
+
+@api_view(['GET'])
+def list_strategies(request):
+    user = request.user
+    is_vip = getattr(user, 'is_vip', False)
+
+    data = []
+    for name, cls in strategy_registry.items():
+        if cls.level == 'vip' and not is_vip:
+            continue
+        data.append({
+            'name': name,
+            'params': getattr(cls, 'params', []),
+            'level': cls.level
+        })
+    return JsonResponse({'strategies': data})

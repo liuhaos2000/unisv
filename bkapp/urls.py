@@ -1,8 +1,9 @@
 # bkapp/urls.py
 from django.urls import path
-from .views import ListCreateTodo, DetailUpdateTodo
+
+from .views.strategiesView import list_strategies
 
 urlpatterns = [
-    path('todos/', ListCreateTodo.as_view(), name='todo-list-create'),
-    path('todos/<int:pk>/', DetailUpdateTodo.as_view(), name='todo-detail-update'),
+
+    path('strategies/', list_strategies),
 ]

@@ -1,4 +1,4 @@
-python manage.py makemigrations todos
+python manage.py makemigrations bkapp
 python manage.py migrate
 
 

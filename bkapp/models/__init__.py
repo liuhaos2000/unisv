@@ -49,3 +49,6 @@ from .backtest_records import BacktestRecord  # 回测记录：存储回测结�
 from .watchlists import Watchlist  # 自选股清单：用户创建的股票观察列表
 
 from .watchlist_stocks import WatchlistStock  # 自选股关联表：记录每个清单中包含的股票和添加时间
+
+
+from .users2 import User2
