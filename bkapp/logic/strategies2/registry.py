@@ -12,7 +12,7 @@ from typing import Optional
 
 from .base import StockSelectionStrategyBase
 
-stock_strategy_registry = {}
+strategy2_registry = {}
 
 
 def load_strategies(package: Optional[object] = None, recursive: bool = True) -> None:
@@ -44,7 +44,7 @@ def load_strategies(package: Optional[object] = None, recursive: bool = True) ->
                 continue
             if issubclass(obj, StockSelectionStrategyBase) and obj is not StockSelectionStrategyBase:
                 key = getattr(obj, "name", obj.__name__)
-                stock_strategy_registry[key] = obj
+                strategy2_registry[key] = obj
 
         # recurse into subpackages
         if recursive and ispkg:
@@ -58,12 +58,12 @@ def load_strategies(package: Optional[object] = None, recursive: bool = True) ->
 
 def get_strategy(name: str):
     """Return the strategy class registered under `name` or None."""
-    return stock_strategy_registry.get(name)
+    return strategy2_registry.get(name)
 
 
 def list_strategies():
     """Return a sorted list of registered strategy keys."""
-    return sorted(stock_strategy_registry.keys())
+    return sorted(strategy2_registry.keys())
 
 
 # initialize when module is imported
