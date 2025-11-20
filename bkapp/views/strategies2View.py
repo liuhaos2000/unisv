@@ -10,7 +10,7 @@ from ..logic.strategies2.registry import strategy2_registry
 def list_strategies2(request):
     user = request.user
     is_vip = getattr(user, 'is_vip', False)
-    is_vip = True
+
     strategies = []
 
     for name, cls in strategy2_registry.items():

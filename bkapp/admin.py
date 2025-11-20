@@ -5,6 +5,7 @@ from .models import (
     Stock, StockDailyData, StockFinancialReport,
     User, Watchlist, WatchlistStock
 )
+from .models.users2 import User2
 
 
 @admin.register(Todo)
@@ -91,3 +92,17 @@ class WatchlistStockAdmin(admin.ModelAdmin):
     search_fields = ('stock_code', 'watchlist__name')
     list_filter = ('added_at', 'created_at')
     readonly_fields = ('created_at', 'updated_at')
+
+
+@admin.register(User2)
+class User2Admin(admin.ModelAdmin):
+    list_display = ('id', 'username', 'email', 'phone', 'is_vip', 'is_active')
+    search_fields = ('username', 'email', 'phone')
+    list_filter = ('is_vip', 'is_active', 'date_joined')
+    readonly_fields = ('date_joined', 'last_login')
+    fieldsets = (
+        (None, {'fields': ('username', 'password')}),
+        ('Personal info', {'fields': ('first_name', 'last_name', 'email', 'phone')}),
+        ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser', 'is_vip', 'groups', 'user_permissions')}),
+        ('Important dates', {'fields': ('last_login', 'date_joined')}),
+    )

@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'bkapp.apps.BkappConfig', # new 
         # 3rd party 
     'rest_framework',  # new
+    'rest_framework_simplejwt',
 ]
 
 # new
