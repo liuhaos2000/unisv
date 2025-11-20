@@ -80,8 +80,8 @@ class UserAdmin(admin.ModelAdmin):
 
 @admin.register(Watchlist)
 class WatchlistAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user_id', 'name', 'created_at')
-    search_fields = ('name', 'user_id')
+    list_display = ('id', 'openid', 'name', 'created_at')
+    search_fields = ('name', 'openid')
     list_filter = ('created_at',)
     readonly_fields = ('created_at', 'updated_at')
 
@@ -96,13 +96,14 @@ class WatchlistStockAdmin(admin.ModelAdmin):
 
 @admin.register(User2)
 class User2Admin(admin.ModelAdmin):
-    list_display = ('id', 'username', 'email', 'phone', 'is_vip', 'is_active')
-    search_fields = ('username', 'email', 'phone')
+    list_display = ('id', 'username', 'email', 'phone', 'nickname', 'is_vip', 'is_active')
+    search_fields = ('username', 'email', 'phone', 'nickname', 'openid')
     list_filter = ('is_vip', 'is_active', 'date_joined')
     readonly_fields = ('date_joined', 'last_login')
     fieldsets = (
         (None, {'fields': ('username', 'password')}),
-        ('Personal info', {'fields': ('first_name', 'last_name', 'email', 'phone')}),
+        ('Personal info', {'fields': ('first_name', 'last_name', 'email', 'phone', 'nickname')}),
+        ('Third-party info', {'fields': ('openid', 'headimg')}),
         ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser', 'is_vip', 'groups', 'user_permissions')}),
         ('Important dates', {'fields': ('last_login', 'date_joined')}),
     )

@@ -6,7 +6,7 @@ class Watchlist(BaseModel):
     class Meta:
         db_table = 'watchlists'
 
-    user_id = models.IntegerField()
+    openid = models.CharField(max_length=255, null=True, blank=True)
     name = models.CharField(max_length=100)
     description = models.TextField(null=True, blank=True)
 
@@ -14,11 +14,11 @@ class Watchlist(BaseModel):
         """转换为字典"""
         data = super().to_dict()
         data.update({
-            'user_id': self.user_id,
+            'openid': self.openid,
             'name': self.name,
             'description': self.description
         })
         return data
 
     def __str__(self):
-        return f'<Watchlist {self.user_id}:{self.name}>'
+        return f'<Watchlist {self.openid}:{self.name}>'
