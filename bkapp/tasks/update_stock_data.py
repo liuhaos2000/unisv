@@ -2,7 +2,7 @@ from celery import shared_task
 import akshare as ak
 from django.utils import timezone
 from datetime import time
-
+from django.core.cache import cache
 
 def is_trade_time(now):
     """判斷是否為 A 股交易時間"""
@@ -32,7 +32,12 @@ def update_stock_data():
     global last_run_minute, last_run_15min
 
     now = timezone.localtime()
-
+    # 先检查缓存中是否有数据
+    stock_data = cache.get('stock_data')
+    if stock_data is None:
+        do_fetch_stock()
+        return "缓存中无数据，已抓取并更新缓存"
+        
     if is_trade_time(now):
         if last_run_minute == now.minute:
             return "已在本分鐘執行過（交易時間）"

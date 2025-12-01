@@ -1,13 +1,24 @@
+■ 环境
 D:\my\uniservice\Scripts\activate.bat
 cd D:\my\unisv
 
 
-
+■ 安装DB
 python manage.py makemigrations bkapp
 python manage.py migrate
+python manage.py createsuperuser
 
 
+■ 安装
+pip install Django
+pip install djangorestframework
+pip install djangorestframework-simplejwt
+pip install redis django-redis
+pip install celery
+pip install akshare
 
+
+■ 运行
 celery -A unisv worker -l INFO
 celery -A unisv beat -l INFO
 python manage.py runserver
@@ -15,7 +26,8 @@ python manage.py runserver
 http://127.0.0.1:8000/admin/
 
 
-pip install redis django-redis
-pip install celery
-pip install akshare
+
+
+redis-server
+
 
