@@ -18,3 +18,4 @@ http://127.0.0.1:8000/admin/
 pip install redis django-redis
 pip install celery
 pip install akshare
+
