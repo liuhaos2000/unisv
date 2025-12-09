@@ -1,13 +1,11 @@
 ■ 环境
-D:\my\uniservice\Scripts\activate.bat
-cd D:\my\unisv
+D:\99_wk\pythondev\myenv\Scripts\activate.bat
 
 
 ■ 安装DB
 python manage.py makemigrations bkapp
 python manage.py migrate
 python manage.py createsuperuser
-
 
 ■ 安装
 pip install Django
@@ -17,7 +15,6 @@ pip install redis django-redis
 pip install celery
 pip install akshare
 
-
 ■ 运行
 celery -A unisv worker -l INFO
 celery -A unisv beat -l INFO
@@ -26,8 +23,11 @@ python manage.py runserver
 http://127.0.0.1:8000/admin/
 
 
-
-
 redis-server
 
-
+■API 
+https://momaapi.com/docs-shares.html
+历史数据
+http://api.momaapi.com/hsstock/history/000001.SZ/d/n/34E1BB45-2D59-4761-AB47-CEBC7A676A57?st=20240601&et=20251209&lt=300
+实时数据
+http://api.momaapi.com/hsstock/real/time/000001/34E1BB45-2D59-4761-AB47-CEBC7A676A57

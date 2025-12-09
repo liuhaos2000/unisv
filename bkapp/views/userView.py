@@ -23,7 +23,8 @@ def get_user_first_stock(request):
             ]
         }
     """
-    openid = request.query_params.get('openid')
+    #openid = request.query_params.get('openid')
+    openid = "111"
     
     if not openid:
         return Response({
