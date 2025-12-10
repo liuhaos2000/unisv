@@ -42,16 +42,22 @@ INSTALLED_APPS = [
         # 3rd party 
     'rest_framework',  # new
     'rest_framework_simplejwt',
+
+    'corsheaders',
 ]
 
 # new
 REST_FRAMEWORK = { 
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny', 
-    ]
+    ],
+        'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
 }
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -135,11 +141,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # user JWT
 AUTH_USER_MODEL = 'bkapp.User2'
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ),
-}
+
 
 # redis
 CACHES = {
@@ -163,4 +165,7 @@ CELERY_BEAT_SCHEDULE = {
         "schedule": 60,   # 每 60 秒執行一次
     }
 }
+
+# CORS 设置
+CORS_ALLOW_ALL_ORIGINS  = True  
 

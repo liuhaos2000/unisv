@@ -4,7 +4,7 @@ from rest_framework import status
 
 from ..models.watchlists import Watchlist
 from ..models.watchlist_stocks import WatchlistStock
-
+import requests
 
 @api_view(['GET'])
 def get_user_first_stock(request):
@@ -25,7 +25,7 @@ def get_user_first_stock(request):
     """
     #openid = request.query_params.get('openid')
     openid = "111"
-    
+
     if not openid:
         return Response({
             "code": -1,
@@ -40,7 +40,7 @@ def get_user_first_stock(request):
             return Response({
                 "code": 1,
                 "message": "No watchlist found for this openid",
-                "data": []
+                "data": {}
             }, status=status.HTTP_404_NOT_FOUND)
         
         # Get all stocks in this watchlist
@@ -50,7 +50,7 @@ def get_user_first_stock(request):
             return Response({
                 "code": 2,
                 "message": "No stocks found in this watchlist",
-                "data": []
+                "data": {}
             }, status=status.HTTP_200_OK)
         
         # Build response data
@@ -66,7 +66,13 @@ def get_user_first_stock(request):
         return Response({
             "code": 0,
             "message": "success",
-            "data": stocks_data
+            "data": {
+                "userName":"大郎1",
+	            "userImage":"https://vkceyugu.cdn.bspapp.com/VKCEYUGU-dc-site/094a9dc0-50c0-11eb-b680-7980c8a877b8.jpg",
+	            "userLevel":"0",
+	            "userLevelTimeLimit":"2026/12/30",
+                "userSkList":stocks_data
+            }
         }, status=status.HTTP_200_OK)
     
     except Exception as e:
@@ -80,25 +86,36 @@ def get_user_first_stock(request):
 
 
 def get_stocks_from_codes(stock_codes):
-    logging.info(f"Fetching stock data for: {stock_codes}")
+
+    codes = ",".join(code["stock_code"] for code in stock_codes)
 
     stock_data = []
-    all_stock_info = ak.stock_zh_a_spot_em()
 
-    for code in stock_codes:
+    url = f"http://api.momaapi.com/hsrl/ssjy_more/34E1BB45-2D59-4761-AB47-CEBC7A676A57?stock_codes={codes}"; 
+
+    response = requests.get(url)
+
+    if response.status_code == 200:
+        all_stock_info = response.json()
+    else:
+        print(f"请求失败，状态码: {response.status_code}")
+
+    for code_dict in stock_codes:
+        code = code_dict['stock_code']
         try:
             # 从获取的所有股票数据中筛选目标股票
-            stock_row = all_stock_info[all_stock_info['代码'] == code]
-            if not stock_row.empty:
+            stock_row = next((item for item in all_stock_info if item['dm'] == code), None)
+
+            if stock_row is not None:
                 stock_data.append({
                     "skId": code,
-                    "skName": stock_row.iloc[0]['名称'],
-                    "price": stock_row.iloc[0]['最新价'] if not pd.isna(stock_row.iloc[0]['最新价']) else 0,  # 处理 NaN
-                    "movement": stock_row.iloc[0]['涨跌幅'] if not pd.isna(stock_row.iloc[0]['涨跌幅']) else 0  # 处理 NaN
+                    "skName": code,
+                    "price": stock_row['p'] ,  # 处理 NaN
+                    "movement": stock_row['pc']   # 处理 NaN
                 })
             else:
-                logging.warning(f"Stock code {code} not found in all_stock_info")
+                print(f"Stock code {code} not found in all_stock_info")
         except Exception as e:
-            logging.warning(f"Error processing data for {code}: {e}")
+            print(f"Error processing data for {code}: {e}")
 
     return stock_data

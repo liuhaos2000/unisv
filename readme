@@ -15,6 +15,8 @@ pip install redis django-redis
 pip install celery
 pip install akshare
 
+pip install django-cors-headers
+
 ■ 运行
 celery -A unisv worker -l INFO
 celery -A unisv beat -l INFO
@@ -31,3 +33,5 @@ https://momaapi.com/docs-shares.html
 http://api.momaapi.com/hsstock/history/000001.SZ/d/n/34E1BB45-2D59-4761-AB47-CEBC7A676A57?st=20240601&et=20251209&lt=300
 实时数据
 http://api.momaapi.com/hsstock/real/time/000001/34E1BB45-2D59-4761-AB47-CEBC7A676A57
+
+http://api.momaapi.com/hsrl/ssjy_more/34E1BB45-2D59-4761-AB47-CEBC7A676A57?stock_codes=000001,000002
