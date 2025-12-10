@@ -10,7 +10,7 @@ from .views.userView import get_user_first_stock
 
 urlpatterns = [
 
-    path('strategies/', list_strategies),
+    path('sk/strategies/', list_strategies),
 
 
     #find

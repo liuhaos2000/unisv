@@ -52,6 +52,7 @@ def list_strategies(request):
 
     return Response({
         "code": 0,
+        "message": "success",
         "count": len(strategies),
         "data": strategies
     })
