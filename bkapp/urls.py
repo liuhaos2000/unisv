@@ -6,12 +6,12 @@ from rest_framework_simplejwt import views as jwt_views
 from .views.strategiesView import list_strategies
 from .views.strategies2View import list_strategies2
 from .views.userView import get_user_first_stock
-
+from .views.skView import get_sk_k
 
 urlpatterns = [
-
+    #sk
     path('sk/strategies/', list_strategies),
-
+    path('sk/getskk', get_sk_k),
 
     #find
     path('find/strategies2/', list_strategies2),

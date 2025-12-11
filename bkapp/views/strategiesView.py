@@ -42,7 +42,8 @@ def list_strategies(request):
 
         strategies.append({
             "value": getattr(cls, "value", name),
-            "name": name,
+            "text": name,
+            "disable": False,
             "title": getattr(cls, "title", name),
             "description": getattr(cls, "description", ""),
             "level": getattr(cls, "level", "normal"),
