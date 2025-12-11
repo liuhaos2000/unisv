@@ -41,10 +41,13 @@ def get_huice(request):
         history = fetch_and_convert_data(skId)
 
         strategy_class = get_strategy_by_value(celueId)
+        
+
+
         strategy_instance = strategy_class(skId=skId)
 
         out_data = strategy_instance.backtest(history)
-
+  
         return Response(out_data)
 
     except Exception as e:
