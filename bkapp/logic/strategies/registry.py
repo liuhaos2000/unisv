@@ -60,6 +60,12 @@ def get_strategy(name: str):
     """Return the strategy class registered under `name` or None."""
     return strategy_registry.get(name)
 
+def get_strategy_by_value(value: str):
+    """Return the strategy class registered under `value` or None."""
+    for cls in strategy_registry.values():
+        if hasattr(cls, "value") and cls.value == value:
+            return cls
+    return None
 
 def list_strategies():
     """Return a sorted list of registered strategy keys."""

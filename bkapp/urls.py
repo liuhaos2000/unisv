@@ -7,11 +7,12 @@ from .views.strategiesView import list_strategies
 from .views.strategies2View import list_strategies2
 from .views.userView import get_user_first_stock
 from .views.skView import get_sk_k
-
+from .views.skView import get_huice
 urlpatterns = [
     #sk
     path('sk/strategies/', list_strategies),
-    path('sk/getskk', get_sk_k),
+    path('sk/getskk/', get_sk_k),
+    path('sk/gethuice/', get_huice),
 
     #find
     path('find/strategies2/', list_strategies2),
