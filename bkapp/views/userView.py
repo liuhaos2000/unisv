@@ -100,8 +100,11 @@ def get_stocks_from_codes(stock_codes):
     else:
         print(f"请求失败，状态码: {response.status_code}")
 
+    allnames = get_stocks_name()
+
     for code_dict in stock_codes:
         code = code_dict['stock_code']
+        name = next((item['mc'] for item in allnames if item['dm'][:6] == code[:6]), None)
         try:
             # 从获取的所有股票数据中筛选目标股票
             stock_row = next((item for item in all_stock_info if item['dm'] == code), None)
@@ -109,7 +112,7 @@ def get_stocks_from_codes(stock_codes):
             if stock_row is not None:
                 stock_data.append({
                     "skId": code,
-                    "skName": code,
+                    "skName": name,
                     "price": stock_row['p'] ,  # 处理 NaN
                     "movement": stock_row['pc']   # 处理 NaN
                 })
@@ -119,3 +122,19 @@ def get_stocks_from_codes(stock_codes):
             print(f"Error processing data for {code}: {e}")
 
     return stock_data
+
+
+def get_stocks_name():
+
+    url = "http://api.momaapi.com/hslt/list/34E1BB45-2D59-4761-AB47-CEBC7A676A57"
+
+    response = requests.get(url)
+
+
+
+    if response.status_code == 200:
+        all_stock_name = response.json()
+    else:
+        print(f"请求失败，状态码: {response.status_code}")
+    
+    return all_stock_name

@@ -12,14 +12,14 @@ from bkapp.logic.strategies.registry import get_strategy,get_strategy_by_value
 def get_sk_k(request):
     try:
         skId = request.query_params.get('skId')
-
+        skName = request.query_params.get('skName')
         converted_data = fetch_and_convert_data(skId)
 
         return Response({
             "code": 0,
             "message": "success",
             "data": {
-                "title":f"上证指数（{skId}）",
+                "title":f"{skName}（{skId}）",
                 "raw":converted_data
             }
         }, status=status.HTTP_200_OK)
