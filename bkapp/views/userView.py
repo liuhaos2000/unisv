@@ -124,18 +124,3 @@ def get_stocks_from_codes(stock_codes):
 
     return stock_data
 
-
-def get_stocks_name():
-
-    url = "http://api.momaapi.com/hslt/list/34E1BB45-2D59-4761-AB47-CEBC7A676A57"
-
-    response = requests.get(url)
-
-
-
-    if response.status_code == 200:
-        all_stock_name = response.json()
-    else:
-        print(f"请求失败，状态码: {response.status_code}")
-    
-    return all_stock_name
