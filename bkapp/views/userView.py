@@ -5,6 +5,7 @@ from rest_framework import status
 from ..models.watchlists import Watchlist
 from ..models.watchlist_stocks import WatchlistStock
 import requests
+from ..global_data import get_allskname_fromapi_global
 
 @api_view(['GET'])
 def get_user_first_stock(request):
@@ -100,7 +101,7 @@ def get_stocks_from_codes(stock_codes):
     else:
         print(f"请求失败，状态码: {response.status_code}")
 
-    allnames = get_stocks_name()
+    allnames = get_allskname_fromapi_global()
 
     for code_dict in stock_codes:
         code = code_dict['stock_code']
