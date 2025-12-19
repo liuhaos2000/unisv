@@ -3,7 +3,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from ..logic.strategies2.registry import strategy2_registry
-
+from ..global_data import get_allskname_fromapi_global
 
 @api_view(['GET'])
 #@permission_classes([IsAuthenticated])  # 需要登录
@@ -50,10 +50,13 @@ def list_strategies2(request):
             "params": params,
             "category": getattr(cls, "category", "General"),
         })
+    
+    allnames = get_allskname_fromapi_global()
 
     return Response({
         "code": 0,
         "message": "success",
         "count": len(strategies),
-        "data": strategies
+        "data": strategies,
+        "allnames":allnames
     })

@@ -3,7 +3,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from ..logic.strategies.registry import strategy_registry
-
+from ..models.watchlists import Watchlist
+from ..models.watchlist_stocks import WatchlistStock
 
 @api_view(['GET'])
 #@permission_classes([IsAuthenticated])  # 需要登录
@@ -51,9 +52,24 @@ def list_strategies(request):
             "category": getattr(cls, "category", "General"),
         })
 
+    #获取关注List
+    #openid = request.query_params.get('openid')
+    openid = "111"
+    guanzhuList = []
+    watchlist = Watchlist.objects.filter(openid=openid).first()
+    if not watchlist:
+        guanzhuList = []
+    stocks = WatchlistStock.objects.filter(watchlist=watchlist)
+    if not stocks.exists():
+        guanzhuList = []
+    else:
+        for stock in stocks:
+            guanzhuList.append(stock.stock_code)
+
     return Response({
         "code": 0,
         "message": "success",
         "count": len(strategies),
-        "data": strategies
+        "data": strategies,
+        "guanzhuList": guanzhuList
     })

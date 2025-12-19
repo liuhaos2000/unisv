@@ -8,11 +8,17 @@ from .views.strategies2View import list_strategies2
 from .views.userView import get_user_first_stock
 from .views.skView import get_sk_k
 from .views.skView import get_huice
+from .views.skView import addToWatchlist
+from .views.skView import removeFromWatchlist
+
 urlpatterns = [
     #sk
     path('sk/strategies/', list_strategies),
     path('sk/getskk/', get_sk_k),
     path('sk/gethuice/', get_huice),
+    path('sk/add/', addToWatchlist),
+    path('sk/remove/', removeFromWatchlist),
+
 
     #find
     path('find/strategies2/', list_strategies2),
