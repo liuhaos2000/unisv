@@ -2,7 +2,7 @@ import numpy as np
 from .base import StrategyBase
 
 class RSIStrategy(StrategyBase):
-    value = '003'
+    value = '101'
     name = 'MACD'
     params = ['period', 'lower', 'upper']
     level = 'vip'
