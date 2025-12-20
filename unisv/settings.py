@@ -169,3 +169,9 @@ CELERY_BEAT_SCHEDULE = {
 # CORS 设置
 CORS_ALLOW_ALL_ORIGINS  = True  
 
+ALLOWED_HOSTS = [
+    '8.137.119.6',  # 你的服务器 IP 地址
+    'localhost',    # 本地开发环境
+    '127.0.0.1',    # 本地开发环境
+    # 其他需要的主机名或 IP 地址
+]
