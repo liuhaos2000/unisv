@@ -401,7 +401,7 @@ def _attach_composite_score(results):
         row['composite_score'] = round(composite, 4)
 
 
-MAX_MOMENTUM_SUBSCRIPTIONS = 5
+MAX_MOMENTUM_SUBSCRIPTIONS = 10
 
 
 def _validate_momentum_payload(payload):
